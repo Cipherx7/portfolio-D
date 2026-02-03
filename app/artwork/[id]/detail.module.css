@@ -1,0 +1,41 @@
+.container {
+    padding-top: 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.backLink {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--muted-foreground);
+    text-decoration: none;
+    margin-bottom: 2rem;
+    transition: color 0.2s;
+}
+
+.backLink:hover {
+    color: var(--foreground);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.info {
+    text-align: center;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.description {
+    color: var(--muted-foreground);
+    max-width: 600px;
+    margin: 0 auto;
+}

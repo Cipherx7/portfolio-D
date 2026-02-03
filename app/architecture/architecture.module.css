@@ -1,0 +1,110 @@
+.container {
+    padding-top: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+}
+
+.subtitle {
+    color: var(--muted-foreground);
+}
+
+.filterBar {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.filterBtn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    color: var(--muted-foreground);
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    transition: all 0.2s;
+}
+
+.activeFilter {
+    background: var(--primary);
+    color: var(--primary-foreground);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    overflow: hidden;
+    transition: transform 0.3s;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--border);
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+}
+
+.imageWrapper {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    background: var(--muted);
+}
+
+.image {
+    transition: scale 0.3s;
+}
+
+.card:hover .image {
+    scale: 1.05;
+}
+
+.cardContent {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.cardTitle {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.cardMeta {
+    font-size: 0.875rem;
+    color: var(--muted-foreground);
+}
+
+.category {
+    text-transform: capitalize;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+.cardDesc {
+    font-size: 0.95rem;
+    line-height: 1.5;
+    color: var(--foreground);
+}

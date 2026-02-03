@@ -1,0 +1,19 @@
+[
+  {
+    "id": "1769948001641",
+    "title": "photo",
+    "description": "ddwd",
+    "category": "studio",
+    "year": "2026",
+    "software": [],
+    "images": [
+      {
+        "path": "/uploads/1769948001639-0-TheArtificialThinker.png",
+        "caption": "hello",
+        "type": "sketch"
+      }
+    ],
+    "featured": false,
+    "date": "2026-02-01T12:13:21.641Z"
+  }
+]

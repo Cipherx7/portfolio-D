@@ -1,0 +1,110 @@
+.loginContainer {
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+.loginBox {
+    max-width: 450px;
+    width: 100%;
+    padding: 3rem;
+    text-align: center;
+}
+
+.title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    color: hsl(var(--primary));
+}
+
+.subtitle {
+    color: var(--muted-foreground);
+    margin-bottom: 2rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    text-align: left;
+}
+
+.inputGroup label {
+    font-weight: 600;
+    color: var(--foreground);
+}
+
+.input {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0.875rem;
+    font-size: 1rem;
+    color: var(--foreground);
+    transition: all 0.2s;
+}
+
+.input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.error {
+    background: rgba(220, 38, 38, 0.1);
+    border: 1px solid rgba(220, 38, 38, 0.3);
+    color: rgb(185, 28, 28);
+    padding: 0.75rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+}
+
+.submitBtn {
+    background: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    border: none;
+    padding: 1rem;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.submitBtn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(128, 0, 0, 0.3);
+}
+
+.submitBtn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.hint {
+    margin-top: 2rem;
+    font-size: 0.85rem;
+    color: var(--muted-foreground);
+}
+
+.hint code {
+    background: var(--secondary);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-family: monospace;
+    color: var(--primary);
+}

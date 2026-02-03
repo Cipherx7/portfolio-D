@@ -1,0 +1,108 @@
+:root {
+  /* HSL Color Palette - Maroon & Creamy White Theme */
+  --background: 40 30% 96%;
+  /* Creamy White */
+  --foreground: 350 40% 15%;
+  /* Dark Maroon/Brown text */
+
+  --card: 40 30% 94%;
+  --card-foreground: 350 40% 15%;
+
+  --popover: 40 30% 96%;
+  --popover-foreground: 350 40% 15%;
+
+  --primary: 350 80% 30%;
+  /* Deep Maroon */
+  --primary-foreground: 40 30% 96%;
+  /* Cream text on maroon */
+
+  --secondary: 40 20% 85%;
+  /* Slightly darker cream for secondary actions */
+  --secondary-foreground: 350 40% 15%;
+
+  --muted: 40 20% 85%;
+  --muted-foreground: 350 20% 40%;
+  /* Desaturated maroon for subtitles */
+
+  --accent: 350 80% 30%;
+  --accent-foreground: 40 30% 96%;
+
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 40 30% 96%;
+
+  --border: 350 20% 80%;
+  /* Light maroon-ish border */
+  --input: 350 20% 80%;
+  --ring: 350 80% 30%;
+
+  --radius: 0.75rem;
+
+  /* Glassmorphism - Adjusted for Light Theme */
+  --glass-bg: rgba(255, 253, 245, 0.7);
+  /* Warm white glass */
+  --glass-border: rgba(128, 0, 0, 0.1);
+  /* Subtle maroon border */
+  --glass-shadow: 0 4px 30px rgba(128, 0, 0, 0.05);
+
+  /* Typography */
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Playfair Display', serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: hsl(var(--background));
+  color: hsl(var(--foreground));
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: var(--radius);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+
+.btn-primary:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.title-serif {
+  font-family: var(--font-serif);
+}
