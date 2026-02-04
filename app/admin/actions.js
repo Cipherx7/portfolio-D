@@ -1,8 +1,11 @@
 'use server';
 
-import { saveWriting, saveArtwork, saveArchitecture } from '@/lib/data';
-import path from 'path';
-import fs from 'fs/promises';
+import { saveWriting, saveArtwork, saveArchitecture, getWritings, getArtwork, getArchitecture } from '@/lib/data';
+import Writing from '@/lib/models/Writing';
+import Artwork from '@/lib/models/Artwork';
+import Architecture from '@/lib/models/Architecture';
+import connectToDatabase from '@/lib/db';
+import { put } from '@vercel/blob';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
@@ -13,7 +16,7 @@ function slugify(text) {
 export async function createWriting(formData) {
     const title = formData.get('title');
     const content = formData.get('content');
-    const status = formData.get('status'); // 'draft' or 'final'
+    const status = formData.get('status') || 'draft';
     const featured = formData.get('featured') === 'on';
 
     if (!title || !content) return { error: 'Missing fields' };
@@ -41,31 +44,16 @@ export async function createArtwork(formData) {
     const description = formData.get('description');
     const progressImage = formData.get('image'); // File
     const progressStage = formData.get('stage'); // 'sketch', 'lineart', 'color', 'final'
-
-    // Note: For a real "Progress" tracker, we might want to append to an existing artwork.
-    // But for now, let's assume we upload a NEW artwork entry or update an existing one?
-    // Let's keep it simple: Create New Artwork Entry.
-    // Actually, user wants "progress of my artwork".
-    // Maybe we can upload multiple images?
-    // Let's just store an array of progress steps: { stage, imagePath, date }.
-    // For simplicity MVP: Upload a single image as "Final" or "Progress".
-
-    // Revised approach: Create a new Artwork Item with ONE initial image.
-    // Future updates could add more images to it.
+    const status = formData.get('status') || 'draft';
 
     if (!title || !progressImage) return { error: 'Missing fields' };
 
-    const buffer = Buffer.from(await progressImage.arrayBuffer());
     const filename = `${Date.now()}-${progressImage.name.replace(/\s/g, '-')}`;
-    const uploadPath = path.join(process.cwd(), 'public/uploads', filename);
 
-    await fs.writeFile(uploadPath, buffer);
-
-    const imagePath = `/uploads/${filename}`;
-
-    // For this simple version, each upload is a new "post". 
-    // Ideally, we'd select an existing artwork to add progress to.
-    // But let's build the "New Artwork" flow first.
+    // Upload to Vercel Blob
+    const blob = await put(filename, progressImage, {
+        access: 'public',
+    });
 
     const id = Date.now().toString();
     const featured = formData.get('featured') === 'on';
@@ -75,10 +63,11 @@ export async function createArtwork(formData) {
         title,
         description,
         featured,
+        status,
         steps: [
             {
                 stage: progressStage || 'Work In Progress',
-                image: imagePath,
+                image: blob.url,
                 date: new Date().toISOString()
             }
         ]
@@ -95,6 +84,7 @@ export async function createArchitecture(formData) {
     const category = formData.get('category'); // 'academic', 'studio', 'technical'
     const year = formData.get('year');
     const software = formData.get('software'); // Comma-separated string
+    const status = formData.get('status') || 'draft';
 
     // Get all uploaded images
     const images = [];
@@ -106,14 +96,15 @@ export async function createArchitecture(formData) {
         const type = formData.get(`type-${imageIndex}`) || 'photo';
 
         if (imageFile && imageFile.size > 0) {
-            const buffer = Buffer.from(await imageFile.arrayBuffer());
             const filename = `${Date.now()}-${imageIndex}-${imageFile.name.replace(/\s/g, '-')}`;
-            const uploadPath = path.join(process.cwd(), 'public/uploads', filename);
 
-            await fs.writeFile(uploadPath, buffer);
+            // Upload to Vercel Blob
+            const blob = await put(filename, imageFile, {
+                access: 'public',
+            });
 
             images.push({
-                path: `/uploads/${filename}`,
+                path: blob.url,
                 caption,
                 type
             });
@@ -138,10 +129,52 @@ export async function createArchitecture(formData) {
         software: softwareArray,
         images,
         featured,
+        status,
         date: new Date().toISOString()
     });
 
     revalidatePath('/architecture');
     revalidatePath('/');
     redirect('/architecture');
+}
+
+export async function getAdminContent() {
+    const [writings, artwork, architecture] = await Promise.all([
+        getWritings({}),
+        getArtwork({}),
+        getArchitecture({})
+    ]);
+    return { writings, artwork, architecture };
+}
+
+export async function updateStatus(type, id, status) {
+    await connectToDatabase();
+
+    let Model;
+    if (type === 'writing') Model = Writing;
+    else if (type === 'artwork') Model = Artwork;
+    else if (type === 'architecture') Model = Architecture;
+
+    if (Model) {
+        await Model.findOneAndUpdate(
+            { id: id },
+            { status: status },
+            { strict: false }
+        );
+        revalidatePath('/');
+        revalidatePath(`/${type}`);
+        return { success: true };
+    }
+    return { success: false, error: 'Invalid type' };
+}
+
+export async function updateWritingContent(id, content) {
+    await connectToDatabase();
+    await Writing.findOneAndUpdate(
+        { id: id },
+        { content: content },
+        { strict: false }
+    );
+    revalidatePath('/writing');
+    return { success: true };
 }

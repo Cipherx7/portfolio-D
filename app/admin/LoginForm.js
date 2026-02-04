@@ -1,9 +1,10 @@
 'use client';
 import { useState } from 'react';
-import { verifyPassword } from './auth';
+import { verifyUser } from './auth';
 import styles from './login.module.css';
 
 export default function LoginForm({ onLoginSuccess }) {
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
@@ -14,7 +15,8 @@ export default function LoginForm({ onLoginSuccess }) {
         setLoading(true);
 
         try {
-            const result = await verifyPassword(password);
+            // Updated to pass both username and password
+            const result = await verifyUser(username, password);
 
             if (result.success) {
                 // Store authentication in session storage
@@ -35,9 +37,23 @@ export default function LoginForm({ onLoginSuccess }) {
         <div className={styles.loginContainer}>
             <div className={`glass-panel ${styles.loginBox}`}>
                 <h1 className={styles.title}>Admin Access</h1>
-                <p className={styles.subtitle}>Enter your password to continue</p>
+                <p className={styles.subtitle}>Enter your credentials to continue</p>
 
                 <form onSubmit={handleSubmit} className={styles.form}>
+                    <div className={styles.inputGroup}>
+                        <label htmlFor="username">Username</label>
+                        <input
+                            id="username"
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            className={styles.input}
+                            placeholder="Enter username"
+                            disabled={loading}
+                            autoFocus
+                        />
+                    </div>
+
                     <div className={styles.inputGroup}>
                         <label htmlFor="password">Password</label>
                         <input
@@ -46,9 +62,8 @@ export default function LoginForm({ onLoginSuccess }) {
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             className={styles.input}
-                            placeholder="Enter admin password"
+                            placeholder="Enter password"
                             disabled={loading}
-                            autoFocus
                         />
                     </div>
 
@@ -61,15 +76,11 @@ export default function LoginForm({ onLoginSuccess }) {
                     <button
                         type="submit"
                         className={styles.submitBtn}
-                        disabled={loading || !password}
+                        disabled={loading || !username || !password}
                     >
                         {loading ? 'Verifying...' : 'Login'}
                     </button>
                 </form>
-
-                <p className={styles.hint}>
-                    Default password: <code>drushti2024</code> (change in .env.local)
-                </p>
             </div>
         </div>
     );

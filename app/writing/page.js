@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function WritingPage() {
-    const writings = await getWritings();
+    const writings = await getWritings({ status: 'final' });
 
     return (
         <div className={styles.container}>

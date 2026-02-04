@@ -8,7 +8,7 @@ export const metadata = {
 };
 
 export default async function ArtworkPage() {
-    const artwork = await getArtwork();
+    const artwork = await getArtwork({ status: 'final' });
 
     return (
         <div className={styles.container}>

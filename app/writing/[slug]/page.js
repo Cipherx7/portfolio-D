@@ -26,11 +26,10 @@ export default async function WritingDetailPage({ params }) {
                 </div>
             </header>
 
-            <div className={styles.content}>
-                {writing.content.split('\n').map((para, i) => (
-                    para ? <p key={i}>{para}</p> : <br key={i} />
-                ))}
-            </div>
+            <div
+                className={styles.content}
+                dangerouslySetInnerHTML={{ __html: writing.content }}
+            />
         </article>
     );
 }

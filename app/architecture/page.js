@@ -7,7 +7,7 @@ export const metadata = {
 };
 
 export default async function ArchitecturePage() {
-    const projects = await getArchitecture();
+    const projects = await getArchitecture({ status: 'final' });
 
     return (
         <div className={styles.container}>

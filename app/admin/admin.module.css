@@ -146,3 +146,69 @@
     height: 20px;
     cursor: pointer;
 }
+
+.manageList {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.listItem {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.listActions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.statusBadge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.statusFinal {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.statusDraft {
+    background: #f3f4f6;
+    color: #4b5563;
+}
+
+.iconBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s;
+}
+
+.iconBtn:hover {
+    transform: scale(1.1);
+}
+
+.editContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}

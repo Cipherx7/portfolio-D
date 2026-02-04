@@ -1,16 +1,31 @@
 'use server';
+import connectToDatabase from '@/lib/db';
+import User from '@/lib/models/User';
+import bcrypt from 'bcryptjs';
 
-export async function verifyPassword(password) {
-    const adminPassword = process.env.ADMIN_PASSWORD;
+export async function verifyUser(username, password) {
+    await connectToDatabase();
 
-    if (!adminPassword) {
-        console.error('ADMIN_PASSWORD not set in environment variables');
-        return { success: false, error: 'Server configuration error' };
+    if (!username || !password) {
+        return { success: false, error: 'Username and password are required' };
     }
 
-    if (password === adminPassword) {
-        return { success: true };
-    }
+    try {
+        const user = await User.findOne({ username });
 
-    return { success: false, error: 'Incorrect password' };
+        if (!user) {
+            return { success: false, error: 'User not found' };
+        }
+
+        const isValid = await bcrypt.compare(password, user.password);
+
+        if (isValid) {
+            return { success: true };
+        } else {
+            return { success: false, error: 'Password incorrect' };
+        }
+    } catch (error) {
+        console.error('Authentication error:', error);
+        return { success: false, error: 'Server error' };
+    }
 }
