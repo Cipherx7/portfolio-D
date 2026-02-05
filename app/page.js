@@ -10,21 +10,31 @@ export default async function Home() {
     return (
         <div className={styles.container}>
             {/* Hero / About Section */}
-            <section className={styles.aboutSection}>
-                <div className={styles.aboutContent}>
-                    <h1 className={styles.title}>About the Author.</h1>
-                    <p className={styles.bio}>
-                        Welcome to my creative corner. I am an undergraduate architecture graduate and a passionate writer,
-                        weaving stories with words while designing spaces with purpose.
+            {/* Hero / About Section */}
+            <section className={styles.heroSection}>
+                <div className={styles.heroContent}>
+                    <div className={styles.handwrittenText}>
+                        <p>I am an architecture student who thinks in <span className={styles.underline}>lines</span>,</p>
+                        <p>shadows, and silence.</p>
+                        <p>I draw faces, imagine spaces, write stories, and build</p>
+                        <p>worlds—</p>
+                        <p>sometimes with a pencil, sometimes with <span className={styles.underline}>words</span>.</p>
+                    </div>
 
-                        <br /><br />
-                        Here you will find my architectural projects, creative writings, and artistic explorations.
-                        Building worlds—both physical and fictional—is my passion, and this portfolio is where they all come together.
-                    </p>
+                    <div className={styles.heroFooter}>
+                        <span>Architecture Student</span>
+                        <span className={styles.separator}>|</span>
+                        <span>Artist</span>
+                        <span className={styles.separator}>|</span>
+                        <span>Writer</span>
+                    </div>
                 </div>
-                {/* Placeholder for Author Image - using a div for now or could ask user for an image */}
-                <div className={`${styles.imagePlaceholder} glass-panel`}>
-                    <span style={{ opacity: 0.5 }}>Author Image</span>
+
+                <div className={styles.heroImageWrapper}>
+                    <div className={styles.photoCard}>
+                        {/* Placeholder for Author Image - can be replaced with actual image */}
+                        <div className={styles.photoPlaceholder}></div>
+                    </div>
                 </div>
             </section>
 
